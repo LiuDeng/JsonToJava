@@ -24,6 +24,7 @@ public class Main {
 	private static final String OPTION_GSON = "g";
 	private static final String OPTION_PARCELABLE = "p";
 	private static final String OPTION_TO_STRING = "s";
+	private static final String OPTION_OUTPUT_DIR = "d";
 
 
 	/**
@@ -41,6 +42,7 @@ public class Main {
 		jsonToJava.setUrl(cmd.getOptionValue(OPTION_URL));
 		jsonToJava.setPackage(cmd.getOptionValue(OPTION_PACKAGE));
 		jsonToJava.setBaseType(cmd.getOptionValue(OPTION_ROOT));
+		jsonToJava.setOutputDir(cmd.getOptionValue(OPTION_OUTPUT_DIR));
 		if(cmd.hasOption(OPTION_GSON)){
 			jsonToJava.addOutputOption(OutputOption.GSON);
 		}
@@ -76,7 +78,8 @@ public class Main {
 		options.addOption(url);
 		Option pack = OptionBuilder.hasArg().isRequired().withDescription("The package name for the generated classes").create(OPTION_PACKAGE);
 		options.addOption(pack);
-		
+		Option dir = OptionBuilder.hasArg().isRequired().withDescription("The package name for the generated classes").create(OPTION_OUTPUT_DIR);
+		options.addOption(dir);
 		return options;
 		
 		

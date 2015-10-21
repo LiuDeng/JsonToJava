@@ -1,8 +1,6 @@
 package com.jsontojava;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -29,6 +27,7 @@ public class JsonToJava {
 	private String mBaseType;
 	private Map<String, NewType> mTypes;
 	private EnumSet<OutputOption> mOutputOptions;
+	private String mOutputDir;
 
 	public JsonToJava() {
 		mInflector = new Inflector();
@@ -74,10 +73,12 @@ public class JsonToJava {
 			NewType type = entry.getValue();
 			ZipEntry e = new ZipEntry(path+ fileSeparater + className + FILE_EXTENSION_JAVA);
 			out.putNextEntry(e);
-//			File classFile = new File(dir, className + FILE_EXTENSION_JAVA);
+			File classFile = new File(mOutputDir, className + FILE_EXTENSION_JAVA);
+			FileOutputStream fileOut = new FileOutputStream(classFile);
 			IOUtils.write(type.toPojoString(mOutputOptions,this), out);
 			out.closeEntry();
-//			IOUtils.write(classFile, );
+			IOUtils.write(type.toPojoString(mOutputOptions, this), fileOut);
+			fileOut.close();
 			System.out.println("Created " + className + FILE_EXTENSION_JAVA);
 //			System.out.println("Contract for " + className);
 //			System.out.println(type.toContract() + "\n\n");
@@ -110,6 +111,11 @@ public class JsonToJava {
 
 	public void setPackage(String package1) {
 		mPackage = package1;
+	}
+
+	public void  setOutputDir(String dir)
+	{
+		mOutputDir = dir;
 	}
 
 	public String getBaseType() {
