@@ -1,11 +1,9 @@
-package com.example.api.model;
+package com.company;
 
-import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
-import android.os.Parcel;
 
 
-public class File implements Parcelable{
+public class File{
 
     private static final String FIELD_HEIGHT = "height";
     private static final String FIELD_SMALL = "small";
@@ -79,40 +77,6 @@ public class File implements Parcelable{
 
     public Video getVideo() {
         return mVideo;
-    }
-
-    public File(Parcel in) {
-        mHeight = in.readInt();
-        mSmall = in.readString();
-        mLarge = in.readString();
-        mIsGif = in.readInt() == 1 ? true: false;
-        mWidth = in.readInt();
-        mVideo = in.readParcelable(Video.class.getClassLoader());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<File> CREATOR = new Parcelable.Creator<File>() {
-        public File createFromParcel(Parcel in) {
-            return new File(in);
-        }
-
-        public File[] newArray(int size) {
-        return new File[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mHeight);
-        dest.writeString(mSmall);
-        dest.writeString(mLarge);
-        dest.writeInt(mIsGif ? 1 : 0);
-        dest.writeInt(mWidth);
-        dest.writeParcelable(mVideo, flags);
     }
 
 

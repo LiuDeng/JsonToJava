@@ -1,13 +1,10 @@
-package com.example.api.model;
+package com.company;
 
-import java.util.ArrayList;
-import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
-import android.os.Parcel;
 
 
-public class Joke implements Parcelable{
+public class Joke{
 
     private static final String FIELD_FILE = "file";
     private static final String FIELD_TEXT = "text";
@@ -147,53 +144,6 @@ public class Joke implements Parcelable{
 
     public int getCmtC() {
         return mCmtC;
-    }
-
-    public Joke(Parcel in) {
-        mFile = in.readParcelable(File.class.getClassLoader());
-        mText = in.readString();
-        mBuryC = in.readInt();
-        mT = in.readParcelable(T.class.getClassLoader());
-        mCollectC = in.readInt();
-        mPlayC = in.readInt();
-        mGods = new ArrayList<God>();
-        in.readTypedList(mGods, God.CREATOR);
-        mUser = in.readLong();
-        mShareC = in.readInt();
-        mLikeC = in.readInt();
-        m_id = in.readLong();
-        mCmtC = in.readInt();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<Joke> CREATOR = new Parcelable.Creator<Joke>() {
-        public Joke createFromParcel(Parcel in) {
-            return new Joke(in);
-        }
-
-        public Joke[] newArray(int size) {
-        return new Joke[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mFile, flags);
-        dest.writeString(mText);
-        dest.writeInt(mBuryC);
-        dest.writeParcelable(mT, flags);
-        dest.writeInt(mCollectC);
-        dest.writeInt(mPlayC);
-        dest.writeTypedList(mGods);
-        dest.writeLong(mUser);
-        dest.writeInt(mShareC);
-        dest.writeInt(mLikeC);
-        dest.writeLong(m_id);
-        dest.writeInt(mCmtC);
     }
 
 

@@ -73,7 +73,7 @@ public class JsonToJava {
 			NewType type = entry.getValue();
 			ZipEntry e = new ZipEntry(path+ fileSeparater + className + FILE_EXTENSION_JAVA);
 			out.putNextEntry(e);
-			File classFile = new File(mOutputDir, className + FILE_EXTENSION_JAVA);
+			File classFile = new File(mOutputDir + path, className + FILE_EXTENSION_JAVA);
 			FileOutputStream fileOut = new FileOutputStream(classFile);
 			IOUtils.write(type.toPojoString(mOutputOptions,this), out);
 			out.closeEntry();

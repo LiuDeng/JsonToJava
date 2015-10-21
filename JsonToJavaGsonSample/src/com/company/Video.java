@@ -1,11 +1,9 @@
-package com.example.api.model;
+package com.company;
 
-import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
-import android.os.Parcel;
 
 
-public class Video implements Parcelable{
+public class Video{
 
     private static final String FIELD_DURATION = "duration";
     private static final String FIELD_HIGH = "high";
@@ -46,34 +44,6 @@ public class Video implements Parcelable{
 
     public String getLow() {
         return mLow;
-    }
-
-    public Video(Parcel in) {
-        mDuration = in.readInt();
-        mHigh = in.readString();
-        mLow = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<Video> CREATOR = new Parcelable.Creator<Video>() {
-        public Video createFromParcel(Parcel in) {
-            return new Video(in);
-        }
-
-        public Video[] newArray(int size) {
-        return new Video[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mDuration);
-        dest.writeString(mHigh);
-        dest.writeString(mLow);
     }
 
 
