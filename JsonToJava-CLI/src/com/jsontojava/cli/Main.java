@@ -18,6 +18,9 @@ import com.jsontojava.JsonToJava;
 import com.jsontojava.OutputOption;
 
 public class Main {
+	private static final String PACKAGE_NAME = "com.company";
+	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\JsonToJava\\JsonToJavaGsonSample\\src\\";
+
 	private static final String OPTION_PACKAGE = "package";
 	private static final String OPTION_URL = "url";
 	private static final String OPTION_ROOT = "class";
@@ -33,36 +36,19 @@ public class Main {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
-		Options options = createOptions();
-		
-		CommandLineParser parser = new BasicParser();
-		CommandLine cmd = parser.parse( options, args);
+		doConvert("http://localhost:5000/", "Joke");
+	}
+
+	private static void  doConvert(String url , String baseType) throws IOException, ParseException
+	{
 		JsonToJava jsonToJava = new JsonToJava();
-		
-		jsonToJava.setUrl(cmd.getOptionValue(OPTION_URL));
-		jsonToJava.setPackage(cmd.getOptionValue(OPTION_PACKAGE));
-		jsonToJava.setBaseType(cmd.getOptionValue(OPTION_ROOT));
-		jsonToJava.setOutputDir(cmd.getOptionValue(OPTION_OUTPUT_DIR));
-		if(cmd.hasOption(OPTION_GSON)){
-			jsonToJava.addOutputOption(OutputOption.GSON);
-		}
-		if(cmd.hasOption(OPTION_PARCELABLE)){
-			jsonToJava.addOutputOption(OutputOption.PARCELABLE);
-		}
-		if(cmd.hasOption(OPTION_TO_STRING)){
-			jsonToJava.addOutputOption(OutputOption.TO_STRING);
-		}
-		
+		jsonToJava.setUrl(url);
+		jsonToJava.setPackage(PACKAGE_NAME);
+		jsonToJava.setBaseType(baseType);
+		jsonToJava.setOutputDir(OUTPUT_DIR);
+		jsonToJava.addOutputOption(OutputOption.TO_STRING);
 		jsonToJava.fetchJson();
-		File zipFile = new File(jsonToJava.getPackage() + ".zip");
-		OutputStream os = new FileOutputStream(zipFile);
-		jsonToJava.outputZipFile(os);
-		os.close();
-		System.out.println("\nFinished creating java classes.  Your files are located in " + zipFile.getAbsolutePath() );
-
-
-	
-
+		jsonToJava.outputZipFile();
 	}
 
 
