@@ -1,6 +1,6 @@
 package com.company;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.Date;
 
 
 public class Video{
@@ -10,40 +10,42 @@ public class Video{
     private static final String FIELD_LOW = "low";
 
 
-    @SerializedName(FIELD_DURATION)
-    private int mDuration;
-    @SerializedName(FIELD_HIGH)
-    private String mHigh;
-    @SerializedName(FIELD_LOW)
-    private String mLow;
+    private int duration;
+    private String high;
+    private String low;
 
 
     public Video(){
 
     }
 
-    public void setDuration(int duration) {
-        mDuration = duration;
+    public void set_duration(int duration) {
+        duration = duration;
     }
 
-    public int getDuration() {
-        return mDuration;
+    public int get_duration() {
+        return duration;
     }
 
-    public void setHigh(String high) {
-        mHigh = high;
+    public void set_high(String high) {
+        high = high;
     }
 
-    public String getHigh() {
-        return mHigh;
+    public String get_high() {
+        return high;
     }
 
-    public void setLow(String low) {
-        mLow = low;
+    public void set_low(String low) {
+        low = low;
     }
 
-    public String getLow() {
-        return mLow;
+    public String get_low() {
+        return low;
+    }
+
+    @Override
+    public String toString(){
+        return "duration = " + duration + ", high = " + high + ", low = " + low;
     }
 
 

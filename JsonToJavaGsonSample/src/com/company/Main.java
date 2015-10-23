@@ -5,6 +5,8 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
+
 import com.google.gson.Gson;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -16,10 +18,10 @@ public class Main {
 //		URLConnection connection = client.open(new URL(url));
 //		BufferedReader reader = new BufferedReader()
         InputStream in = new URL(url).openStream();
-        String jsonString = IOUtils.toString(in);
+        String jsonString = IOUtils.toString(in, Charset.forName("utf-8"));
         Gson gson = new Gson();
         Joke joke = gson.fromJson(jsonString, Joke.class);
-        System.out.println(joke.getText());
+        System.out.println(joke.get_text());
         return null;
     }
 

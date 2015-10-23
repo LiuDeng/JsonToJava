@@ -1,149 +1,142 @@
 package com.company;
 
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
+import java.util.Date;
 
 
 public class Joke{
 
-    private static final String FIELD_FILE = "file";
-    private static final String FIELD_TEXT = "text";
-    private static final String FIELD_BURY_C = "buryC";
     private static final String FIELD_T = "T";
     private static final String FIELD_COLLECT_C = "collectC";
+    private static final String FIELD_TEXT = "text";
+    private static final String FIELD_SHARE_C = "shareC";
+    private static final String FIELD__ID = "_id";
+    private static final String FIELD_LIKE_C = "likeC";
+    private static final String FIELD_FILE = "file";
+    private static final String FIELD_CMT_C = "cmtC";
     private static final String FIELD_PLAY_C = "playC";
+    private static final String FIELD_BURY_C = "buryC";
     private static final String FIELD_GODS = "gods";
     private static final String FIELD_USER = "user";
-    private static final String FIELD_SHARE_C = "shareC";
-    private static final String FIELD_LIKE_C = "likeC";
-    private static final String FIELD__ID = "_id";
-    private static final String FIELD_CMT_C = "cmtC";
 
 
-    @SerializedName(FIELD_FILE)
-    private File mFile;
-    @SerializedName(FIELD_TEXT)
-    private String mText;
-    @SerializedName(FIELD_BURY_C)
-    private int mBuryC;
-    @SerializedName(FIELD_T)
-    private T mT;
-    @SerializedName(FIELD_COLLECT_C)
-    private int mCollectC;
-    @SerializedName(FIELD_PLAY_C)
-    private int mPlayC;
-    @SerializedName(FIELD_GODS)
-    private List<God> mGods;
-    @SerializedName(FIELD_USER)
-    private Long mUser;
-    @SerializedName(FIELD_SHARE_C)
-    private int mShareC;
-    @SerializedName(FIELD_LIKE_C)
-    private int mLikeC;
-    @SerializedName(FIELD__ID)
-    private Long m_id;
-    @SerializedName(FIELD_CMT_C)
-    private int mCmtC;
+    private Date T;
+    private int collectC;
+    private String text;
+    private int shareC;
+    private Long _id;
+    private int likeC;
+    private File file;
+    private int cmtC;
+    private int playC;
+    private int buryC;
+    private List<God> gods;
+    private User user;
 
 
     public Joke(){
 
     }
 
-    public void setFile(File file) {
-        mFile = file;
+    public void set_T(Date T) {
+        T = T;
     }
 
-    public File getFile() {
-        return mFile;
+    public Date get_T() {
+        return T;
     }
 
-    public void setText(String text) {
-        mText = text;
+    public void set_collectC(int collectC) {
+        collectC = collectC;
     }
 
-    public String getText() {
-        return mText;
+    public int get_collectC() {
+        return collectC;
     }
 
-    public void setBuryC(int buryC) {
-        mBuryC = buryC;
+    public void set_text(String text) {
+        text = text;
     }
 
-    public int getBuryC() {
-        return mBuryC;
+    public String get_text() {
+        return text;
     }
 
-    public void setT(T T) {
-        mT = T;
+    public void set_shareC(int shareC) {
+        shareC = shareC;
     }
 
-    public T getT() {
-        return mT;
+    public int get_shareC() {
+        return shareC;
     }
 
-    public void setCollectC(int collectC) {
-        mCollectC = collectC;
+    public void set__id(Long _id) {
+        _id = _id;
     }
 
-    public int getCollectC() {
-        return mCollectC;
+    public Long get__id() {
+        return _id;
     }
 
-    public void setPlayC(int playC) {
-        mPlayC = playC;
+    public void set_likeC(int likeC) {
+        likeC = likeC;
     }
 
-    public int getPlayC() {
-        return mPlayC;
+    public int get_likeC() {
+        return likeC;
     }
 
-    public void setGods(List<God> gods) {
-        mGods = gods;
+    public void set_file(File file) {
+        file = file;
     }
 
-    public List<God> getGods() {
-        return mGods;
+    public File get_file() {
+        return file;
     }
 
-    public void setUser(Long user) {
-        mUser = user;
+    public void set_cmtC(int cmtC) {
+        cmtC = cmtC;
     }
 
-    public Long getUser() {
-        return mUser;
+    public int get_cmtC() {
+        return cmtC;
     }
 
-    public void setShareC(int shareC) {
-        mShareC = shareC;
+    public void set_playC(int playC) {
+        playC = playC;
     }
 
-    public int getShareC() {
-        return mShareC;
+    public int get_playC() {
+        return playC;
     }
 
-    public void setLikeC(int likeC) {
-        mLikeC = likeC;
+    public void set_buryC(int buryC) {
+        buryC = buryC;
     }
 
-    public int getLikeC() {
-        return mLikeC;
+    public int get_buryC() {
+        return buryC;
     }
 
-    public void set_id(Long _id) {
-        m_id = _id;
+    public void set_gods(List<God> gods) {
+        gods = gods;
     }
 
-    public Long get_id() {
-        return m_id;
+    public List<God> get_gods() {
+        return gods;
     }
 
-    public void setCmtC(int cmtC) {
-        mCmtC = cmtC;
+    public void set_user(User user) {
+        user = user;
     }
 
-    public int getCmtC() {
-        return mCmtC;
+    public User get_user() {
+        return user;
+    }
+
+    @Override
+    public String toString(){
+        return "T = " + T + ", collectC = " + collectC + ", text = " + text + ", shareC = " + shareC + ", _id = " + _id + ", likeC = " + likeC + ", file = " + file + ", cmtC = " + cmtC + ", playC = " + playC + ", buryC = " + buryC + ", gods = " + gods + ", user = " + user;
     }
 
 
