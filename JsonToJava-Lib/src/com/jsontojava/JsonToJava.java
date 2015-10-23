@@ -2,6 +2,7 @@ package com.jsontojava;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,34 +59,21 @@ public class JsonToJava {
 		}
 	}
 	
-	public OutputStream outputZipFile(OutputStream outputStream) throws IOException{
-//		File zipFile = new File(mPackage + ".zip");
+	public void outputZipFile() throws IOException{
+
 		String[] packageParts = StringUtils.split(mPackage, PACKAGE_SEPARATOR);
 		String fileSeparater = System.getProperty(PROPERTY_FILE_SEPARATOR);
 		String path = StringUtils.join(packageParts, fileSeparater);
-//		File dir = new File(path);
-//		dir.mkdirs();
-		ZipOutputStream out = new ZipOutputStream(outputStream);
-		
 
 		for (Map.Entry<String, NewType> entry : mTypes.entrySet()) {
 			String className = entry.getKey();
 			NewType type = entry.getValue();
-			ZipEntry e = new ZipEntry(path+ fileSeparater + className + FILE_EXTENSION_JAVA);
-			out.putNextEntry(e);
 			File classFile = new File(mOutputDir + path, className + FILE_EXTENSION_JAVA);
 			FileOutputStream fileOut = new FileOutputStream(classFile);
-			IOUtils.write(type.toPojoString(mOutputOptions,this), out);
-			out.closeEntry();
 			IOUtils.write(type.toPojoString(mOutputOptions, this), fileOut);
 			fileOut.close();
 			System.out.println("Created " + className + FILE_EXTENSION_JAVA);
-//			System.out.println("Contract for " + className);
-//			System.out.println(type.toContract() + "\n\n");
 		}
-		out.finish();
-		return outputStream;
-//		System.out.println("\nFinished creating java classes.  Your files are located in " + zipFile.getAbsolutePath() );
 
 	}
 
@@ -145,7 +133,7 @@ public class JsonToJava {
 //		BufferedReader reader = new BufferedReader()
 		InputStream in = new URL(url).openStream();
 
-		String jsonString = IOUtils.toString(in);
+		String jsonString = IOUtils.toString(in, Charset.forName("utf-8"));
 		try {
 			retVal = new JSONObject(jsonString);
 		} catch (JSONException e) {

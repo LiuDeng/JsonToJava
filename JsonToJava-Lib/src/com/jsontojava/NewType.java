@@ -13,6 +13,7 @@ public class NewType {
 	private static final String ONE_TAB = "    ";
 	private static final String TWO_TABS = ONE_TAB+ONE_TAB;
 	public static final String IMPORT_JAVA_UTIL_LIST = "java.util.List";
+	public static final String IMPORT_JAVA_UTIL_DATE= "java.util.Date";
 	public static final String IMPORT_JAVA_UIIL_ARRAYLIST = "java.util.ArrayList";
 	public static final String IMPORT_ANDROID_OS_PARCELABLE = "android.os.Parcelable";
 	public static final String IMPORT_ANDROID_OS_PARCEL = "android.os.Parcel";
@@ -122,6 +123,7 @@ public class NewType {
 	}
 	
 	public String toPojoString(EnumSet<OutputOption> options,JsonToJava jsonToJava) {
+		imports.add(IMPORT_JAVA_UTIL_DATE);
 		if (options.contains(OutputOption.PARCELABLE)) {
 			imports.add(IMPORT_ANDROID_OS_PARCEL);
 			imports.add(IMPORT_ANDROID_OS_PARCELABLE);

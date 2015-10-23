@@ -112,7 +112,7 @@ public class Member {
 		StringBuilder sBuilder = new StringBuilder();
 		String methodName = StringUtils.removeStart(getName(), "m");
 
-		String setPrefix = "get";
+		String setPrefix = "get_";
 		try{
 		if (getType().equals("boolean")) {
 			setPrefix = "is";
@@ -125,11 +125,23 @@ public class Member {
 		return sBuilder.toString();
 	}
 
+	public static String captureName(String name) {
+		name = name.substring(0, 1).toUpperCase() + name.substring(1);
+		return  name;
+	}
+
 	public String getSetter(Inflector inflector) {
 		StringBuilder sBuilder = new StringBuilder();
 		String methodName = StringUtils.removeStart(getName(), "m");
-		String nameNoPrefix = inflector.camelCase(methodName, false);
-		sBuilder.append("    public void set").append(methodName).append("(").append(getType()).append(" ")
+		String nameNoPrefix = methodName;
+		try {
+			nameNoPrefix = inflector.camelCase(methodName, false);
+		}
+		catch (Exception ex)
+		{
+			//ex.printStackTrace();
+		}
+		sBuilder.append("    public void set_").append(methodName).append("(").append(getType()).append(" ")
 				.append(nameNoPrefix).append(") {\n        ").append(getName()).append(" = ").append(nameNoPrefix)
 				.append(";").append("\n    }\n\n");
 		return sBuilder.toString();
@@ -168,7 +180,8 @@ public class Member {
 	}
 
 	public String getName() {
-		return mName;
+		//return mName;
+		return mJsonField;
 	}
 
 	public void setName(String name) {

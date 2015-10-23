@@ -1,11 +1,15 @@
 package com.jsontojava;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class TypeUtils {
 
 	public static final String PRIMITIVE_LONG = "long";
 	public static final String PRIMITIVE_DOUBLE = "double";
+	public static final String PRIMITIVE_Date= "Date";
 	public static final String PRIMITIVE_INT = "int";
 	public static final String PRIMITIVE_BOOLEAN = "boolean";
 	public static final String TYPE_LONG = "Long";
@@ -76,21 +80,30 @@ public class TypeUtils {
 			clazz = PRIMITIVE_DOUBLE;
 		}
 		if (clazz.equals(TYPE_STRING)) {
-			if(((String) current).matches("^[0-9]+(\\.[0-9]+)?$")){
+			try
+			{
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = sdf.parse((String) current);
+				clazz = PRIMITIVE_Date;
+			}
+			catch (ParseException e)
+			{
+				if(((String) current).matches("^[0-9]+(\\.[0-9]+)?$")){
 
-				try {
-					long l = Long.parseLong((String) current);
-					clazz = PRIMITIVE_LONG;
-	
-					if (Math.abs(l) < Integer.MAX_VALUE / 2) {
-						clazz = PRIMITIVE_INT;
-					}
-				} catch (NumberFormatException e) {
 					try {
-						Double.parseDouble((String) current);
-						clazz = PRIMITIVE_DOUBLE;
-					} catch (NumberFormatException e2) {
-	
+						long l = Long.parseLong((String) current);
+						clazz = PRIMITIVE_LONG;
+
+						if (Math.abs(l) < Integer.MAX_VALUE / 2) {
+							clazz = PRIMITIVE_INT;
+						}
+					} catch (NumberFormatException ex) {
+						try {
+							Double.parseDouble((String) current);
+							clazz = PRIMITIVE_DOUBLE;
+						} catch (NumberFormatException e2) {
+
+						}
 					}
 				}
 			}
