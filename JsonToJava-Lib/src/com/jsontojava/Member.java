@@ -1,6 +1,7 @@
 package com.jsontojava;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,16 @@ public class Member {
 	private String mName;
 	private String mDisplayName;
 
+	public String getmTypeName() {
+		return mTypeName;
+	}
+
+	public void setmTypeName(String mTypeName) {
+		this.mTypeName = mTypeName;
+	}
+
+	private String mTypeName;
+
 	public static class Builder {
 		private static final Inflector mInflector = new Inflector();
 		private Set<String> mModifiers;
@@ -23,6 +34,7 @@ public class Member {
 		private String mName;
 		private String mDisplayName;
 		private boolean mPlural;
+		private String mTypeName;
 
 		public Builder() {
 			mPlural = false;
@@ -63,9 +75,22 @@ public class Member {
 			return this;
 		}
 
+		public Member.Builder setTypeName(String typeName) {
+			mTypeName = typeName;
+			return this;
+		}
+
 		public Member.Builder setJsonField(String jsonField) {
 			mJsonField = jsonField;
-			mFieldConstantName = "FIELD_" + mInflector.underscore(jsonField).toUpperCase();
+
+			for (Map.Entry<String, String[]> entry : JsonToJava.TypeAliasMap.entrySet())
+			{
+				if (entry.getValue()[0].equals(mJsonField) && entry.getValue()[1].equals(mTypeName))
+				{
+					mJsonField =  entry.getKey();
+				}
+			}
+			mFieldConstantName = "FIELD_" + mInflector.underscore(mJsonField).toUpperCase();
 			return this;
 		}
 
@@ -85,6 +110,7 @@ public class Member {
 			member.setJsonField(mJsonField);
 			member.setDisplayName(mDisplayName);
 			member.mModifiers = mModifiers;
+			member.setmTypeName(mTypeName);
 			return member;
 			
 		}
@@ -108,11 +134,20 @@ public class Member {
 		return getName().hashCode();
 	}
 
+	//首字母转大写
+	public static String toUpperCaseFirstOne(String s)
+	{
+		if(Character.isUpperCase(s.charAt(0)))
+			return s;
+		else
+			return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
+	}
+
 	public String getGetterSignature() {
 		StringBuilder sBuilder = new StringBuilder();
 		String methodName = StringUtils.removeStart(getName(), "m");
 
-		String setPrefix = "get_";
+		String setPrefix = "get";
 		try{
 		if (getType().equals("boolean")) {
 			setPrefix = "is";
@@ -120,7 +155,7 @@ public class Member {
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
-
+		methodName = toUpperCaseFirstOne(methodName);
 		sBuilder.append(setPrefix).append(methodName).append("()");
 		return sBuilder.toString();
 	}
@@ -141,7 +176,7 @@ public class Member {
 		{
 			//ex.printStackTrace();
 		}
-		sBuilder.append("    public void set_").append(methodName).append("(").append(getType()).append(" ")
+		sBuilder.append("    public void set").append(toUpperCaseFirstOne(methodName)).append("(").append(getType()).append(" ")
 				.append(nameNoPrefix).append(") {\n        ").append(getName()).append(" = ").append(nameNoPrefix)
 				.append(";").append("\n    }\n\n");
 		return sBuilder.toString();
@@ -181,7 +216,7 @@ public class Member {
 
 	public String getName() {
 		//return mName;
-		return mJsonField;
+		return getJsonField();
 	}
 
 	public void setName(String name) {

@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import org.modeshape.common.text.Inflector;
 
 public class JsonToJava {
+	public static Map<String,String[]> TypeAliasMap = new HashMap<String,String[]>();
+
 	private static final String DEFAULT_BASE_TYPE = "Root";
 	private static final String FILE_EXTENSION_JAVA = ".java";
 	private static final String PACKAGE_SEPARATOR = ".";
@@ -143,8 +145,13 @@ public class JsonToJava {
 		return retVal;
 	}
 
-	private Member generateMember(String key, Object current) {
+	private Member generateMember(String key, Object current,String typeName) {
 		Member.Builder memberBuilder = new Member.Builder();
+
+		memberBuilder.setTypeName(typeName);
+		if (JsonToJava.TypeAliasMap.containsKey(key)) {
+			key = JsonToJava.TypeAliasMap.get(key)[0];
+		}
 
 		String singular = mInflector.singularize(key);
 		if(singular.contains("$")){
@@ -219,7 +226,7 @@ public class JsonToJava {
 
 		}
 		memberBuilder.addModifier("private");
-		return memberBuilder.build();
+		return memberBuilder.build( );
 	}
 
 	private NewType generateClass(JSONObject obj, String typeName) {
@@ -230,13 +237,12 @@ public class JsonToJava {
 		if(keys != null){
 			for (String s : keys) {
 				Object current = obj.opt(s);
-				Member m = generateMember(s, current);
+				Member m = generateMember(s, current,typeName);
 				typeBuilder.addMember(m);
 				if (current instanceof JSONArray) {
 					typeBuilder.addImport(NewType.IMPORT_JAVA_UTIL_LIST);
 	
 				}
-	
 			}
 		}
 		return typeBuilder.build();

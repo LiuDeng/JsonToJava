@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import com.google.gson.Gson;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import java.util.List;
 public class Main {
 
     private static  Object getJsonFromUrl(String url) throws IOException {
@@ -20,8 +21,8 @@ public class Main {
         InputStream in = new URL(url).openStream();
         String jsonString = IOUtils.toString(in, Charset.forName("utf-8"));
         Gson gson = new Gson();
-        Joke joke = gson.fromJson(jsonString, Joke.class);
-        System.out.println(joke.get_text());
+        List<Joke> jokes = gson.fromJson(jsonString, new TypeToken<List<Joke>>() {}.getType());
+        System.out.println(jokes.get(0).get_text());
         return null;
     }
 

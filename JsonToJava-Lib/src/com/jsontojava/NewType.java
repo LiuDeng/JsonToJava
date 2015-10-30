@@ -151,8 +151,9 @@ public class NewType {
 			// Insert the static fields to define the json names
 			// eg. private static final String FIELD_FIRST_NAME = "first_name";
 			for (Member member : members) {
+
 				sBuilder.append(
-						ONE_TAB+"private static final String " + member.getFieldName() + " = \"" + member.getJsonField() + "\";")
+						ONE_TAB+"public static final String " + member.getFieldName() + " = \"" + member.getJsonField() + "\";")
 						.append("\n");
 			}
 			sBuilder.append("\n\n");
@@ -163,7 +164,7 @@ public class NewType {
 			if (options.contains(OutputOption.GSON)) {
 				sBuilder.append(ONE_TAB+"@SerializedName(" + member.getFieldName() + ")\n");
 			}
-			sBuilder.append(ONE_TAB+"private " + member.getType() + " " + member.getName() + ";").append("\n");
+			sBuilder.append(ONE_TAB+"protected " + member.getType() + " " + member.getName() + ";").append("\n");
 		}
 		sBuilder.append("\n\n");
 

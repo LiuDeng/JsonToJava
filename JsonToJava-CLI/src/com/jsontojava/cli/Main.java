@@ -18,8 +18,8 @@ import com.jsontojava.JsonToJava;
 import com.jsontojava.OutputOption;
 
 public class Main {
-	private static final String PACKAGE_NAME = "com.company";
-	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\JsonToJava\\JsonToJavaGsonSample\\src\\";
+	private static final String PACKAGE_NAME = "com.qiuduanribao.jokemodel.servermodel";
+	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\joke\\jokemodel\\src\\main\\java\\";
 
 	private static final String OPTION_PACKAGE = "package";
 	private static final String OPTION_URL = "url";
@@ -36,13 +36,18 @@ public class Main {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
-		doConvert("http://localhost:5000/", "Joke");
+		JsonToJava.TypeAliasMap.clear();
+		JsonToJava.TypeAliasMap.put("gods", new String[]{"Comment","JokeServer"});
+		JsonToJava.TypeAliasMap.put("children",new String[]{"Comment","Comment"});
+		doConvert("http://localhost:5000/joke", "JokeServer");
+		//doConvert("http://localhost:5000/comment", "CommentServer");
 	}
 
 	private static void  doConvert(String url , String baseType) throws IOException, ParseException
 	{
 		JsonToJava jsonToJava = new JsonToJava();
 		jsonToJava.setUrl(url);
+		//jsonToJava.addOutputOption(OutputOption.GSON);
 		jsonToJava.setPackage(PACKAGE_NAME);
 		jsonToJava.setBaseType(baseType);
 		jsonToJava.setOutputDir(OUTPUT_DIR);
