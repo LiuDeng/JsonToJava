@@ -18,7 +18,7 @@ import com.jsontojava.JsonToJava;
 import com.jsontojava.OutputOption;
 
 public class Main {
-	private static final String PACKAGE_NAME = "com.qiuduanribao.jokemodel.servermodel";
+	private static final String PACKAGE_NAME = "com.qiuduanribao.jokemodel";
 	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\joke\\jokemodel\\src\\main\\java\\";
 
 	private static final String OPTION_PACKAGE = "package";
@@ -37,10 +37,15 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
 		JsonToJava.TypeAliasMap.clear();
-		JsonToJava.TypeAliasMap.put("gods", new String[]{"Comment","JokeServer"});
+		//*********字段T默认设置为Date数据类型
+		//JsonToJava.TypeAliasMap.put("json中字段名称gods", new String[]{"要转化为的类型如Comment","指定json中的父类型如Joke"});
+		JsonToJava.TypeAliasMap.put("gods", new String[]{"Comment","Joke"});
 		JsonToJava.TypeAliasMap.put("children",new String[]{"Comment","Comment"});
-		doConvert("http://localhost:5000/joke", "JokeServer");
-		//doConvert("http://localhost:5000/comment", "CommentServer");
+		JsonToJava.TypeAliasMap.put("U",new String[]{"User","Joke"});
+		doConvert("http://localhost:5000/joke", "Joke");
+		JsonToJava.TypeAliasMap.put("U", new String[]{"User", "Comment"});
+		doConvert("http://localhost:5000/comment", "Comment");
+		doConvert("http://localhost:5000/user","User");
 	}
 
 	private static void  doConvert(String url , String baseType) throws IOException, ParseException
@@ -51,7 +56,7 @@ public class Main {
 		jsonToJava.setPackage(PACKAGE_NAME);
 		jsonToJava.setBaseType(baseType);
 		jsonToJava.setOutputDir(OUTPUT_DIR);
-		jsonToJava.addOutputOption(OutputOption.TO_STRING);
+		//jsonToJava.addOutputOption(OutputOption.TO_STRING);
 		jsonToJava.fetchJson();
 		jsonToJava.outputZipFile();
 	}

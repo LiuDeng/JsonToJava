@@ -136,6 +136,7 @@ public class JsonToJava {
 		InputStream in = new URL(url).openStream();
 
 		String jsonString = IOUtils.toString(in, Charset.forName("utf-8"));
+		jsonString = jsonString.replace('\n',' ');
 		try {
 			retVal = new JSONObject(jsonString);
 		} catch (JSONException e) {
@@ -217,6 +218,10 @@ public class JsonToJava {
 				memberBuilder.setType(className);
 			} else {
 				String clazz = TypeUtils.getPrimitiveType(current);
+				if(className.equals("T"))
+				{
+					clazz = TypeUtils.PRIMITIVE_Date;
+				}
 
 				if (clazz.equals(TypeUtils.TYPE_NULL)) {
 					clazz = TypeUtils.TYPE_STRING;

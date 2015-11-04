@@ -44,7 +44,7 @@ public class Member {
 		public Member.Builder setPlural(){
 			mPlural = true;
 			if(mType != null){
-				mType = "List<"+mType+">";
+				mType = "RealmList<"+mType+">";
 			}
 			if(mName != null){
 				mName = mInflector.pluralize(mName);
@@ -67,7 +67,7 @@ public class Member {
 
 		public Member.Builder setType(String type) {
 			if(mPlural){
-				mType = "List<" + type + ">";
+				mType = "RealmList<" + type + ">";
 
 			}else{
 				mType = type;

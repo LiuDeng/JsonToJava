@@ -124,6 +124,8 @@ public class NewType {
 	
 	public String toPojoString(EnumSet<OutputOption> options,JsonToJava jsonToJava) {
 		imports.add(IMPORT_JAVA_UTIL_DATE);
+		imports.add("io.realm.RealmList");
+		imports.add("io.realm.RealmObject");
 		if (options.contains(OutputOption.PARCELABLE)) {
 			imports.add(IMPORT_ANDROID_OS_PARCEL);
 			imports.add(IMPORT_ANDROID_OS_PARCELABLE);
@@ -142,6 +144,7 @@ public class NewType {
 		}
 		sBuilder.append("\n\n");
 		sBuilder.append("public class ").append(name);
+		sBuilder.append(" extends RealmObject");
 		if (options.contains(OutputOption.PARCELABLE)) {
 			sBuilder.append(" implements Parcelable");
 		}
@@ -164,7 +167,7 @@ public class NewType {
 			if (options.contains(OutputOption.GSON)) {
 				sBuilder.append(ONE_TAB+"@SerializedName(" + member.getFieldName() + ")\n");
 			}
-			sBuilder.append(ONE_TAB+"protected " + member.getType() + " " + member.getName() + ";").append("\n");
+			sBuilder.append(ONE_TAB+"private " + member.getType() + " " + member.getName() + ";").append("\n");
 		}
 		sBuilder.append("\n\n");
 
@@ -192,7 +195,7 @@ public class NewType {
 	}
 
 	private String generateExtraMethods() {
-		String type = StringUtils.removeEnd(StringUtils.removeStart(name, "List<"), ">");
+		String type = StringUtils.removeEnd(StringUtils.removeStart(name, "RealmList<"), ">");
 		for (Member member : members) {
 			if (member.getName().equalsIgnoreCase("mId") || member.getName().equalsIgnoreCase("mUniqueId")) {
 				StringBuilder sb = new StringBuilder();
@@ -254,7 +257,7 @@ public class NewType {
 		for (Member member : members) {
 
 			if (member.getType().startsWith("List")) {
-				String type = StringUtils.removeEnd(StringUtils.removeStart(member.getType(), "List<"), ">");
+				String type = StringUtils.removeEnd(StringUtils.removeStart(member.getType(), "RealmList<"), ">");
 				if (TypeUtils.isPrimitiveType(type)) {
 					sb.append(TWO_TABS+"in.readArrayList(").append(type).append(".class.getClassLoader());");
 
@@ -300,7 +303,7 @@ public class NewType {
 		for (Member member : members) {
 			sb.append(ONE_TAB+ONE_TAB);
 			if (member.getType().startsWith("List")) {
-				String type = StringUtils.removeEnd(StringUtils.removeStart(member.getType(), "List<"), ">");
+				String type = StringUtils.removeEnd(StringUtils.removeStart(member.getType(), "RealmList<"), ">");
 				if (TypeUtils.isPrimitiveType(type)) {
 					sb.append("dest.writeList(").append(member.getName()).append(");");
 
