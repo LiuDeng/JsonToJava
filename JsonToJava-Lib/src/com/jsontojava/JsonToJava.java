@@ -18,6 +18,23 @@ import org.modeshape.common.text.Inflector;
 
 public class JsonToJava {
 	public static Map<String,String[]> TypeAliasMap = new HashMap<String,String[]>();
+	public static Map<String,String[]> RealmIndexMap = new HashMap<String, String[]>();
+	public static Map<String,String[]> RealmPrimaryKeyMap = new HashMap<String,String[]>();
+	public static boolean checkTypeContain(String typeName, String memberName, Map<String,String[]> map)
+	{
+		if (!map.containsKey(typeName))
+			return false;
+		String[] members = map.get(typeName);
+		for (int i=0; i<members.length; i++)
+		{
+			if (members[i].equals(memberName))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	private static final String DEFAULT_BASE_TYPE = "Root";
 	private static final String FILE_EXTENSION_JAVA = ".java";

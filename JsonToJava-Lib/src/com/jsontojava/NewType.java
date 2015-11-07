@@ -126,6 +126,8 @@ public class NewType {
 		imports.add(IMPORT_JAVA_UTIL_DATE);
 		imports.add("io.realm.RealmList");
 		imports.add("io.realm.RealmObject");
+		imports.add("io.realm.annotations.Index");
+		imports.add("io.realm.annotations.PrimaryKey");
 		if (options.contains(OutputOption.PARCELABLE)) {
 			imports.add(IMPORT_ANDROID_OS_PARCEL);
 			imports.add(IMPORT_ANDROID_OS_PARCELABLE);
@@ -166,6 +168,14 @@ public class NewType {
 		for (Member member : members) {
 			if (options.contains(OutputOption.GSON)) {
 				sBuilder.append(ONE_TAB+"@SerializedName(" + member.getFieldName() + ")\n");
+			}
+			if (JsonToJava.checkTypeContain(name, member.getName(), JsonToJava.RealmIndexMap))
+			{
+				sBuilder.append(ONE_TAB+"@Index\n");
+			}
+			if (JsonToJava.checkTypeContain(name,member.getName(),JsonToJava.RealmPrimaryKeyMap))
+			{
+				sBuilder.append(ONE_TAB+"@PrimaryKey\n");
 			}
 			sBuilder.append(ONE_TAB+"private " + member.getType() + " " + member.getName() + ";").append("\n");
 		}

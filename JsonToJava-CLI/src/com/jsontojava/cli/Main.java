@@ -16,6 +16,7 @@ import org.apache.commons.cli.ParseException;
 
 import com.jsontojava.JsonToJava;
 import com.jsontojava.OutputOption;
+import org.json.JSONArray;
 
 public class Main {
 	private static final String PACKAGE_NAME = "com.qiuduanribao.jokemodel";
@@ -36,6 +37,15 @@ public class Main {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
+		JsonToJava.RealmIndexMap.clear();
+		JsonToJava.RealmIndexMap.put("Joke", new String[]{"T"});
+		JsonToJava.RealmIndexMap.put("Comment", new String[]{"J"});
+
+		JsonToJava.RealmPrimaryKeyMap.clear();
+		JsonToJava.RealmPrimaryKeyMap.put("Joke", new String[]{"_id"});
+		JsonToJava.RealmPrimaryKeyMap.put("Comment", new String[]{"_id"});
+		JsonToJava.RealmPrimaryKeyMap.put("User", new String[]{"_id"});
+
 		JsonToJava.TypeAliasMap.clear();
 		//*********字段T默认设置为Date数据类型
 		//JsonToJava.TypeAliasMap.put("json中字段名称gods", new String[]{"要转化为的类型如Comment","指定json中的父类型如Joke"});
