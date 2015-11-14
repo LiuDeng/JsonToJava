@@ -18,7 +18,9 @@
           <root url="jar://$MODULE_DIR$/libs/commons-cli-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ideaLibSources/commons-cli-1.2-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="inheritedJdk" />

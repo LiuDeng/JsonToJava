@@ -100,8 +100,8 @@ public class Member {
 		}
 		
 		public Member build(){
-			if((mName.equalsIgnoreCase("mid") || mName.equalsIgnoreCase("muniqueid")) && mType.equalsIgnoreCase("int")){
-				mType = "long";
+			if(mName.equalsIgnoreCase("m_id") && mType.equalsIgnoreCase("int")){
+				mType = "Long";
 			}
 			Member member = new Member();
 			member.setName(mName);
@@ -177,7 +177,7 @@ public class Member {
 			//ex.printStackTrace();
 		}
 		sBuilder.append("    public void set").append(toUpperCaseFirstOne(methodName)).append("(").append(getType()).append(" ")
-				.append(nameNoPrefix).append(") {\n        ").append(getName()).append(" = ").append(nameNoPrefix)
+				.append(nameNoPrefix).append(") {\n        ").append("this.").append(getName()).append(" = ").append(nameNoPrefix)
 				.append(";").append("\n    }\n\n");
 		return sBuilder.toString();
 	}
