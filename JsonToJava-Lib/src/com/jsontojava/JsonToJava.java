@@ -240,6 +240,10 @@ public class JsonToJava {
 					clazz = TypeUtils.PRIMITIVE_Date;
 				}
 
+				if (clazz.equals("Long")) {
+					clazz = TypeUtils.PRIMITIVE_LONG;
+				}
+
 				if (clazz.equals(TypeUtils.TYPE_NULL)) {
 					clazz = TypeUtils.TYPE_STRING;
 				}

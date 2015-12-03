@@ -113,7 +113,7 @@ public class NewType {
 		
 		// column names
 		for(Member member:members){
-			String simpleName = StringUtils.removeStart(member.getName(), "m");
+			String simpleName = member.getName();
 			String underscoreMember = mInflector.underscore(simpleName);
 			sb.append(ONE_TAB).append(PUBLIC_STATIC_FINAL).append("String COLUMN_NAME_").append(underscoreMember.toUpperCase()).append(" = \"").append(underscoreMember.toLowerCase()).append("\";\n\n");
 		}
@@ -227,7 +227,7 @@ public class NewType {
 				sb.append(ONE_TAB+"public int hashCode(){\n");
 				sb.append(TWO_TABS+"return ");
 				if(member.getType().equals("long")){
-					sb.append("((Long)");
+					sb.append("((long)");
 				}
 				sb.append(member.getName());
 				if(member.getType().equals("long")){

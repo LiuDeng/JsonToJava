@@ -20,7 +20,7 @@ import org.json.JSONArray;
 
 public class Main {
 	private static final String PACKAGE_NAME = "com.qiuduanribao.jokemodel";
-	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\joke\\jokemodel\\src\\main\\java\\";
+	private static final String OUTPUT_DIR = "D:\\QiuDuanRiBao\\joke\\app\\src\\main\\java\\";
 
 	private static final String OPTION_PACKAGE = "package";
 	private static final String OPTION_URL = "url";
@@ -50,6 +50,7 @@ public class Main {
 		//*********字段T默认设置为Date数据类型
 		//JsonToJava.TypeAliasMap.put("json中字段名称gods", new String[]{"要转化为的类型如Comment","指定json中的父类型如Joke"});
 		JsonToJava.TypeAliasMap.put("gods", new String[]{"Comment","Joke"});
+		JsonToJava.TypeAliasMap.put("mutiFiles", new String[]{"File","Joke"});
 		JsonToJava.TypeAliasMap.put("children",new String[]{"Comment","Comment"});
 		JsonToJava.TypeAliasMap.put("U",new String[]{"User","Joke"});
 		doConvert("http://localhost:5000/joke", "Joke");

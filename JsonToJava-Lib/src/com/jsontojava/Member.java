@@ -70,6 +70,11 @@ public class Member {
 				mType = "RealmList<" + type + ">";
 
 			}else{
+				if (type.equals("Long"))
+				{
+					int x = 2;
+					x ++;
+				}
 				mType = type;
 			}
 			return this;
@@ -101,7 +106,7 @@ public class Member {
 		
 		public Member build(){
 			if(mName.equalsIgnoreCase("m_id") && mType.equalsIgnoreCase("int")){
-				mType = "Long";
+				mType = "long";
 			}
 			Member member = new Member();
 			member.setName(mName);
@@ -145,7 +150,7 @@ public class Member {
 
 	public String getGetterSignature() {
 		StringBuilder sBuilder = new StringBuilder();
-		String methodName = StringUtils.removeStart(getName(), "m");
+		String methodName =getName();
 
 		String setPrefix = "get";
 		try{
@@ -167,7 +172,7 @@ public class Member {
 
 	public String getSetter(Inflector inflector) {
 		StringBuilder sBuilder = new StringBuilder();
-		String methodName = StringUtils.removeStart(getName(), "m");
+		String methodName = getName();
 		String nameNoPrefix = methodName;
 		try {
 			nameNoPrefix = inflector.camelCase(methodName, false);
