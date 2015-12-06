@@ -45,6 +45,7 @@ public class Main {
 		JsonToJava.RealmPrimaryKeyMap.put("Joke", new String[]{"_id"});
 		JsonToJava.RealmPrimaryKeyMap.put("Comment", new String[]{"_id"});
 		JsonToJava.RealmPrimaryKeyMap.put("User", new String[]{"_id"});
+		JsonToJava.RealmPrimaryKeyMap.put("JokeWeb", new String[]{"_id"});
 
 		JsonToJava.TypeAliasMap.clear();
 		//*********字段T默认设置为Date数据类型
@@ -57,6 +58,7 @@ public class Main {
 		JsonToJava.TypeAliasMap.put("U", new String[]{"User", "Comment"});
 		doConvert("http://localhost:5000/comment", "Comment");
 		doConvert("http://localhost:5000/user","User");
+		doConvert("http://localhost:5000/web","JokeWeb");
 	}
 
 	private static void  doConvert(String url , String baseType) throws IOException, ParseException
